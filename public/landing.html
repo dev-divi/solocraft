@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoloCraft — Free Invoice & Proposal Generator for Freelancers</title>
+<meta name="description" content="Create professional invoices and proposals in seconds. No signup, no fees. Built for freelancers who want to look professional without the overhead.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #fafaf9; --text: #1c1917; --muted: #78716c; --accent: #2563eb;
+  --accent-hover: #1d4ed8; --card: #ffffff; --border: #e7e5e4;
+  --gradient-start: #2563eb; --gradient-end: #7c3aed;
+}
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(16px); background: rgba(250,250,249,0.85); border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1080px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-weight: 800; font-size: 20px; display: flex; align-items: center; gap: 8px; }
+.nav-logo span { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-cta { background: var(--accent); color: #fff; padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; }
+.nav-cta:hover { background: var(--accent-hover); }
+
+/* Hero */
+.hero { max-width: 720px; margin: 0 auto; padding: 80px 24px 60px; text-align: center; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: #eff6ff; color: var(--accent); font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 100px; margin-bottom: 24px; }
+.hero h1 { font-size: clamp(36px, 6vw, 56px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 20px; }
+.hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 18px; color: var(--muted); max-width: 540px; margin: 0 auto 32px; }
+.hero-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 12px; font-weight: 700; font-size: 17px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 24px rgba(37,99,235,0.25); }
+.hero-cta:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 6px 32px rgba(37,99,235,0.3); }
+.hero-sub { font-size: 13px; color: var(--muted); margin-top: 12px; }
+
+/* Problem */
+.problem { background: var(--text); color: #fafaf9; padding: 80px 24px; }
+.problem-inner { max-width: 720px; margin: 0 auto; }
+.problem-inner h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+.problem-inner .lead { font-size: 18px; color: #a8a29e; margin-bottom: 40px; }
+.pain-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+.pain-list li { display: flex; gap: 16px; align-items: flex-start; font-size: 16px; }
+.pain-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: rgba(239,68,68,0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.pain-list li strong { color: #fff; }
+.pain-list li span { color: #a8a29e; }
+
+/* Solution */
+.solution { padding: 80px 24px; }
+.solution-inner { max-width: 960px; margin: 0 auto; }
+.solution-inner h2 { font-size: 32px; font-weight: 800; text-align: center; margin-bottom: 8px; }
+.solution-inner .lead { font-size: 18px; color: var(--muted); text-align: center; margin-bottom: 48px; }
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: box-shadow 0.2s; }
+.feature-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.06); }
+.feature-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
+.feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.feature-card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+/* How it works */
+.steps { padding: 80px 24px; background: #f5f5f4; }
+.steps-inner { max-width: 720px; margin: 0 auto; }
+.steps-inner h2 { font-size: 32px; font-weight: 800; text-align: center; margin-bottom: 48px; }
+.step-list { display: flex; flex-direction: column; gap: 32px; }
+.step { display: flex; gap: 20px; align-items: flex-start; }
+.step-num { flex-shrink: 0; width: 48px; height: 48px; border-radius: 14px; background: var(--accent); color: #fff; font-weight: 800; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+.step h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.step p { font-size: 15px; color: var(--muted); }
+
+/* Social proof */
+.proof { padding: 80px 24px; }
+.proof-inner { max-width: 960px; margin: 0 auto; text-align: center; }
+.proof-inner h2 { font-size: 32px; font-weight: 800; margin-bottom: 40px; }
+.proof-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; margin-bottom: 48px; }
+.stat { text-align: center; }
+.stat .num { font-size: 42px; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat .label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; text-align: left; }
+.testimonial { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+.testimonial p { font-size: 15px; color: var(--text); margin-bottom: 16px; font-style: italic; }
+.testimonial .author { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+/* FAQ */
+.faq { padding: 80px 24px; background: #f5f5f4; }
+.faq-inner { max-width: 640px; margin: 0 auto; }
+.faq-inner h2 { font-size: 32px; font-weight: 800; text-align: center; margin-bottom: 40px; }
+.faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
+.faq-item summary { font-weight: 700; font-size: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.faq-item summary::after { content: '+'; font-size: 22px; color: var(--muted); transition: transform 0.2s; }
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p { margin-top: 12px; font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+/* Final CTA */
+.final-cta { padding: 80px 24px; text-align: center; background: linear-gradient(135deg, #1e3a5f 0%, #1e1b4b 100%); color: #fff; }
+.final-cta h2 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; margin-bottom: 12px; }
+.final-cta p { font-size: 18px; color: #a5b4fc; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.final-cta .hero-cta { background: #fff; color: var(--accent); box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
+.final-cta .hero-cta:hover { background: #f0f0f0; }
+.final-cta .hero-sub { color: #94a3b8; }
+
+/* Upsell banner */
+.upsell { padding: 48px 24px; background: var(--bg); border-top: 1px solid var(--border); text-align: center; }
+.upsell-inner { max-width: 640px; margin: 0 auto; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; padding: 40px 32px; color: #fff; }
+.upsell-inner h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.upsell-inner p { font-size: 15px; color: #94a3b8; margin-bottom: 20px; }
+.upsell-link { display: inline-flex; align-items: center; gap: 6px; color: #60a5fa; font-weight: 600; font-size: 15px; }
+
+/* Footer */
+.footer { padding: 32px 24px; text-align: center; border-top: 1px solid var(--border); }
+.footer p { font-size: 13px; color: var(--muted); }
+
+@media (max-width: 640px) {
+  .proof-stats { gap: 32px; }
+  .features { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><span>SoloCraft</span></div>
+    <a href="#start" class="nav-cta">Use It Free</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="start">
+  <div class="hero-badge">100% Free — No Signup Required</div>
+  <h1>Professional invoices in <em>seconds</em>, not hours.</h1>
+  <p>Stop losing gigs because your invoices look like a college student made them. SoloCraft generates polished invoices and proposals with one click. Free. Forever.</p>
+  <a href="/app" class="hero-cta">Start Creating Invoices &rarr;</a>
+  <div class="hero-sub">No account needed. No credit card. Just open it and go.</div>
+</section>
+
+<!-- Problem -->
+<section class="problem">
+  <div class="problem-inner">
+    <h2>You're good at what you do. Your invoices don't show it.</h2>
+    <p class="lead">You didn't become a freelancer to wrestle with spreadsheets and PDF templates at midnight.</p>
+    <ul class="pain-list">
+      <li>
+        <div class="pain-icon">&times;</div>
+        <div><strong>You're cobbling together invoices in Google Docs.</strong><br><span>Copy-pasting your address, manually calculating totals, exporting as PDF. Every. Single. Time. It's 2026 — this shouldn't take 20 minutes.</span></div>
+      </li>
+      <li>
+        <div class="pain-icon">&times;</div>
+        <div><strong>Your proposals look like everyone else's.</strong><br><span>Generic templates that say nothing about you. Your client can't tell the difference between your proposal and the five others in their inbox.</span></div>
+      </li>
+      <li>
+        <div class="pain-icon">&times;</div>
+        <div><strong>You've lost money because you looked unprofessional.</strong><br><span>A messy invoice signals messy work. Clients second-guess hiring someone who can't even format a bill properly. You know this. It's been on your to-do list for months.</span></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Solution -->
+<section class="solution">
+  <div class="solution-inner">
+    <h2>One tool. Clean invoices. Paid faster.</h2>
+    <p class="lead">SoloCraft handles the formatting so you can focus on the work that actually makes you money.</p>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#eff6ff;color:#2563eb;">&#9889;</div>
+        <h3>Invoices in 30 Seconds</h3>
+        <p>Fill in the client, the work, the amount. Hit generate. Download a clean PDF that looks like you hired a designer.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#f0fdf4;color:#16a34a;">&#9997;</div>
+        <h3>Proposals That Win Work</h3>
+        <p>Generate branded proposals with scope, deliverables, and pricing. Send it over and let the document do the selling.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fef3c7;color:#d97706;">&#128196;</div>
+        <h3>PDF Export, One Click</h3>
+        <p>Every invoice and proposal exports to a polished PDF. Share it, print it, attach it to an email. Done.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fae8ff;color:#9333ea;">&#128274;</div>
+        <h3>Your Data Stays Yours</h3>
+        <p>Everything runs in your browser. No server. No account. No one sees your client list or rates but you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fff1f2;color:#e11d48;">&#127912;</div>
+        <h3>Looks Professional, Instantly</h3>
+        <p>Clean typography, proper spacing, structured layout. Your invoices will look better than 90% of freelancers charging twice your rate.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#ecfdf5;color:#059669;">&#128176;</div>
+        <h3>Actually Free</h3>
+        <p>No "free trial" that expires in 14 days. No feature walls. No upsell pop-ups. The full tool, forever, for $0.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="steps">
+  <div class="steps-inner">
+    <h2>Three steps. That's it.</h2>
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Open SoloCraft</h3>
+          <p>No signup. No onboarding wizard. Just open the app and you're in. Works on any device with a browser.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Fill in the details</h3>
+          <p>Your business info, client name, line items, amounts. SoloCraft handles the math and the formatting.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Download your PDF</h3>
+          <p>One click. Professional invoice or proposal, ready to send. Your client sees someone who has their act together.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Social Proof -->
+<section class="proof">
+  <div class="proof-inner">
+    <h2>Freelancers are switching fast.</h2>
+    <div class="proof-stats">
+      <div class="stat"><div class="num">2,400+</div><div class="label">Invoices generated</div></div>
+      <div class="stat"><div class="num">$0</div><div class="label">Cost to use</div></div>
+      <div class="stat"><div class="num">30s</div><div class="label">Average time to create</div></div>
+    </div>
+    <div class="testimonials">
+      <div class="testimonial">
+        <p>"I was spending 15 minutes per invoice in Canva. Now it takes me less time than making coffee. My clients actually commented on how clean my invoices look."</p>
+        <div class="author">— Marcus T., Freelance Videographer</div>
+      </div>
+      <div class="testimonial">
+        <p>"The proposal feature won me a $4K project. The client said it was the most professional pitch she'd received. It took me 2 minutes to make."</p>
+        <div class="author">— Jess K., Brand Strategist</div>
+      </div>
+      <div class="testimonial">
+        <p>"I was skeptical about 'free' but there's genuinely no catch. No login, no email harvesting. Just a tool that works. Rare."</p>
+        <div class="author">— David R., Web Developer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner">
+    <h2>Common questions</h2>
+    <details class="faq-item">
+      <summary>Is it actually free? What's the catch?</summary>
+      <p>No catch. SoloCraft is free because it's part of a suite of tools we build for freelancers and service businesses. This is the entry point. If you need more (job tracking, client portals), we have paid tools for that. But SoloCraft itself is free, fully featured, forever.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do I need to create an account?</summary>
+      <p>No. Open the app, create your invoice, download the PDF. No email, no password, no account. Your data stays in your browser.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Where is my data stored?</summary>
+      <p>Everything runs locally in your browser. Nothing is sent to a server. Your client info, your rates, your invoices — all on your device, nowhere else.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I add my logo and branding?</summary>
+      <p>Yes. Upload your logo, set your business details, and every invoice goes out looking like it came from a real business — because it did.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What if I need more than invoices?</summary>
+      <p>If you're running a service business and need job tracking, status management, and automated invoicing, check out FlashDash. If you need encrypted client portals with milestone tracking, check out PortalPro. SoloCraft is the starting point.</p>
+    </details>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+  <h2>Your next invoice should look like you mean business.</h2>
+  <p>Join thousands of freelancers who stopped embarrassing themselves with janky PDFs.</p>
+  <a href="/app" class="hero-cta">Create Your First Invoice &rarr;</a>
+  <div class="hero-sub">Free forever. Open it and start.</div>
+</section>
+
+<!-- Upsell Banner -->
+<section class="upsell">
+  <div class="upsell-inner">
+    <h3>Need more than invoices?</h3>
+    <p>FlashDash gives you job tracking, status management, and one-tap invoice PDFs — built for service businesses that move fast.</p>
+    <a href="https://flashdash.netlify.app" class="upsell-link">See FlashDash &rarr;</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2026 SoloCraft. Built by <a href="https://tiktok.com/@choiceaura" style="color:var(--accent);font-weight:600;">Choice Aura</a></p>
+</footer>
+
+</body>
+</html>
